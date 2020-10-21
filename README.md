@@ -23,4 +23,4 @@ Technologies used<br>
 # infNTY corporate wordpress site Theme
 --bootstrap <br>
 --JQUERY + AJAX<br>
-
+# Telegram boots for organization(bot for users and bot for managers)
