@@ -16,11 +16,16 @@ Technologies used<br>
 --php 7 <br>
 --Angulair <br>
 # ElementorBreadcrumbPlugin plugin for Wordpress Elementor constructor
+Technologies used<br>
 --Elementor Technical Documentation for developers<br>
 # Zoo platform
+Technologies used<br>
 --laravel <br>
 --VueJS <br>
 # infNTY corporate wordpress site Theme
+Technologies used<br>
 --bootstrap <br>
 --JQUERY + AJAX<br>
 # Telegram boots for organization(bot for users and bot for managers)
+Technologies used<br>
+--Telegram API
