@@ -17,3 +17,8 @@ Technologies used<br>
 --Angulair <br>
 # ElementorBreadcrumbPlugin plugin for Wordpress Elementor constructor
 --Elementor Technical Documentation for developers<br>
+# Zoo platform
+--laravel <br>
+--VueJS <br>
+
+
