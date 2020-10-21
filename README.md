@@ -15,3 +15,5 @@ Technologies used<br>
 Technologies used<br>
 --php 7 <br>
 --Angulair <br>
+# ElementorBreadcrumbPlugin plugin for Wordpress Elementor constructor
+--Elementor Technical Documentation for developers<br>
