@@ -20,5 +20,7 @@ Technologies used<br>
 # Zoo platform
 --laravel <br>
 --VueJS <br>
-
+# infNTY corporate wordpress site Theme
+--bootstrap <br>
+--JQUERY + AJAX<br>
 
