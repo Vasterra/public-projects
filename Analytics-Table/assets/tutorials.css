@@ -1,0 +1,41 @@
+.tutorials-shadow {
+	cursor: pointer;
+	display: none;
+	background: rgba(0,0,0,.7);
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 9999;
+}
+
+.tutorials-wrap {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.tutorials-wrap__item {
+	cursor: pointer;
+	margin: 5px;
+}
+
+.tutorials-wrap__img {
+	background: url(Screenshot_1.png);
+	height: 125px;
+	width: 125px;
+}
+.tutorials-wrap__head {
+	text-align: center;
+	margin: 5px 0 0;
+	font-weight: bold;
+}
+
+.tutorials-wrap__vimeo {
+	display: none;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 10000;
+}
