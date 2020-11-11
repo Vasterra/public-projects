@@ -1,0 +1,431 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"
+        integrity="sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf"
+        crossorigin="anonymous"></script>
+<body>
+    <div class="container">
+    <div class="row">
+        <div class="col-4">
+            Admin <br><br>
+            <button onclick="getForAll(tokenAdmin, 'users/all')">get all Users</button>
+            <br>
+            <br>
+            <button onclick="getForAll(tokenAdmin, 'users/me')">Me</button>
+            <br>
+            <br>
+            <button onclick="getForAllWithData(tokenAdmin, 'users/createAdminUser')">create Admin User</button>
+            <br>
+            <br>
+            <button onclick="getForAllWithData(tokenAdmin, 'users/createManager')">create Manager User</button>
+            <br>
+            <br>
+            <button onclick="getForAllWithData(tokenAdmin, 'users/createUser')">create User</button>
+            <br>
+            <br>
+            <button onclick="activateUser('2/activateUser')">activate User (manager - manager@manager.com)</button>
+            <br>
+            <br>
+            <button onclick="deactivateUser('2/deactivateUser')">deactivate User (manager - manager@manager.com)</button>
+            <br>
+            <br>
+            <button onclick="updateUserAdmin(tokenAdmin, 'users/updateUserByAdmin')">update User</button>
+            <br>
+            <br>
+            <button onclick="updateMe(tokenAdmin, 'users/updateMe')">update Me</button>
+            <br>
+            <br>
+            <button onclick="deleteUser(tokenAdmin, 'users/deleteUser')">delete User</button>
+            <br>
+            <br>
+            <button onclick="createCountry(tokenAdmin, 'countries/create')">counries create</button>
+            <br>
+            <br>
+            <button onclick="getForAll(tokenAdmin, 'countries/all')">counries all</button>
+            <br>
+            <br>
+            <button onclick="countryById(tokenAdmin, 'countries/getCountryById')">counries by id =4</button>
+            <br>
+            <br>
+            <button onclick="countryByName(tokenAdmin, 'countries/getCountryByName')">getCountryByName Russia</button>
+            <br>
+            <br>
+            <button onclick="countryByIsoCode(tokenAdmin, 'countries/getCountryIsoCode')">getCountryByCode RUS</button>
+            <br>
+            <br>
+            <button onclick="updateCountry(tokenAdmin, 'countries/updateCountry')">Update rusia</button>
+            <br>
+            <br>
+            <button onclick="ActionById(tokenAdmin, 'countries/deleteCountry')">delete rusia</button>
+
+        </div>
+
+        <div class="col-4">
+            Manager <br><br>
+            <button onclick="getForAll(tokenManager, 'users/getMyUsers')">Get My own users</button>
+            <br>
+            <br>
+            <button onclick="getForAll(tokenManager, 'users/me')">Me</button>
+            <br>
+            <br>
+            <button onclick="getForAllWithData(tokenManager, 'users/createUser')">create User</button>
+            <br>
+            <br>
+            <button onclick="updateUserManager(tokenManager, 'users/updateMyUser')">update User</button>
+            <br>
+            <br>
+            <button onclick="updateMe(tokenManager, 'users/updateMe')">update Me</button>
+            <br>
+            <br>
+            <button onclick="deleteUser(tokenManager, 'users/deleteUser')">delete User</button>
+            <br>
+            <br>
+            <button onclick="getForAll(tokenManager, 'countries/all')">counries all</button>
+            <br>
+            <br>
+            <button onclick="countryById(tokenManager, 'countries/getCountryById')">counries by id =4</button>
+            <br>
+            <br>
+            <button onclick="countryByName(tokenManager, 'countries/getCountryByName')">getCountryByName Russia</button>
+            <br>
+            <br>
+            <button onclick="countryByIsoCode(tokenManager, 'countries/getCountryIsoCode')">getCountryByCode RUS</button>
+        </div>
+        <div class="col-4">
+            User <br><br>
+            <button onclick="getForAll(tokenUser, 'users/me')">Me</button>
+            <br>
+            <br>
+            <button onclick="updateMe(tokenUser, 'users/updateMe')">update Me</button>
+            <br>
+            <br>
+            <button onclick="getForAll(tokenUser, 'countries/all')">counries all</button>
+            <br>
+            <br>
+            <button onclick="countryById(tokenUser, 'countries/getCountryById')">counries by id =4</button>
+            <br>
+            <br>
+            <button onclick="countryByName(tokenUser, 'countries/getCountryByName')">getCountryByName Russia</button>
+            <br>
+            <br>
+            <button onclick="countryByIsoCode(tokenUser, 'countries/getCountryIsoCode')">getCountryByCode RUS</button>
+        </div>
+    </div>
+</div>
+<script>
+
+    let tokenAdmin = "";
+    let tokenManager = "";
+    let tokenUser = "";
+    let url = 'http://larpass.loc/api/v1/';  //http://5.101.119.123:8100/api/v1/ //'http://larpass.loc/api/v1/';
+
+    function getToken(email, pass, r) {
+        let token = "";
+        $.ajax({
+            type: 'POST',
+            url: url + 'gettoken',
+            data: 'email=' + email + '&password=' + pass,
+            success: function (data) {
+                token = data.success.token;
+                switch (r) {
+                    case 1:
+                        setTokenAdmin(token);
+                        break;
+                    case 2:
+                        setTokenManager(token);
+                        break;
+                    case 3:
+                        setTokenUser(token);
+                        break;
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr.responseText);
+            }
+        });
+    }
+
+    function setTokenAdmin(token) {
+        tokenAdmin = token;
+    }
+
+    function setTokenManager(token) {
+        tokenManager = token;
+    }
+
+    function setTokenUser(token) {
+        tokenUser = token;
+    }
+
+    getToken('admin@admin.com', '{2JSD%Tgt*6W0WC<o', 1);
+    getToken('manager@manager.com', '12345678', 2);
+    getToken('user@user.com', '12345678', 3);
+
+    function getForAll(token, action) {
+        $.ajax({
+            url: url + action,
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    };
+
+    function getForAllWithData(token, action) {
+        $.ajax({
+            url: url + action,
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify({'name': 'u7777999', 'email': 'u77779999@ui.com', 'password': '12345678'}),
+            method: 'POST',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    };
+
+    function updateUserAdmin(token, action) {
+        $.ajax({
+            url: url + action,
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify({
+                'id': '4',
+                'name': 'Timur',
+                'email': 'timur@ui.com',
+                'password': '9999',
+                'avatar': 'ava.jpg',
+                'address': 'beregovaya 777',
+                'telephone': '77777777',
+            }),
+            method: 'POST',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    };
+
+    function updateUserManager(token, action) {
+        $.ajax({
+            url: url + action,
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify({
+                'id': '5',
+                'name': '222Timur77777',
+                'email': 't222imur77777@ui.com',
+                'password': '9999777',
+                'avatar': 'ava777.jpg',
+                'address': 'beregovaya 999777',
+                'telephone': '999977777777',
+            }),
+            method: 'POST',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    };
+
+
+    function updateMe(token, action) {
+        $.ajax({
+            url: url + action,
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify({
+                'name': 'TimurUpdated',
+                'address': 'beregovaya 999777Updated',
+                'telephone': '999977777777Updated',
+            }),
+            method: 'POST',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    };
+
+    function deleteUser(token, action) {
+        $.ajax({
+            url: url + action,
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify({
+                'id': 6,
+            }),
+            method: 'POST',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    };
+
+    function countryById(token, action) {
+        $.ajax({
+            url: url + action,
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify({
+                'id': 4,
+            }),
+            method: 'POST',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    };
+
+    function ActionById(token, action) {
+        $.ajax({
+            url: url + action,
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify({
+                'id': 4,
+            }),
+            method: 'POST',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    };
+
+    function updateCountry(token, action) {
+        $.ajax({
+            url: url + action,
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify({
+                'id': 4,
+                'country_name': 'RussiaTTT',
+            }),
+            method: 'POST',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    };
+
+
+    function countryByName(token, action) {
+        $.ajax({
+            url: url + action,
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify({
+                'country_name': 'Russia',
+            }),
+            method: 'POST',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    };
+
+    function countryByIsoCode(token, action) {
+        $.ajax({
+            url: url + action,
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify({
+                'country_code': 'Rus',
+            }),
+            method: 'POST',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    };
+
+    function createCountry(token, action) {
+        $.ajax({
+            url: url + action,
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify({
+                'country_name': 'Mexika',
+                'country_code': 'Mex',
+            }),
+            method: 'POST',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    };
+
+
+    function activateUser(action) {
+        $.ajax({
+            url: url + action,
+            method: 'GET',
+            data: {'email': 'manager@manager.com'},
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+            }
+        });
+        getToken('manager@manager.com', '12345678', 2);
+    };
+
+    function deactivateUser(action) {
+        $.ajax({
+            url: url + action,
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+            }
+        });
+        tokenManager="";
+    };
+
+
+
+</script>
+</body>
+</html>
