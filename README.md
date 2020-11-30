@@ -34,3 +34,7 @@ Technologies used<br>
 --laravel <br>
 --laravel passport <br>
 --Voyager admin panel <br>
+# Financial calculator
+Technologies used<br>
+--laravel <br>
+--VueJS <br>
