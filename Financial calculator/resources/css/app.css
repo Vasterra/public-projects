@@ -1,0 +1,46 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+
+body {
+	min-height: 100vh;	
+}
+* {
+	box-sizing: border-box;
+}
+a:hover {
+	text-decoration: none;
+}
+._red {
+	color: #C00000;
+}
+.bg_color {
+	background-color: #FBFBFB;
+}
+._link {
+	color: #007bff;
+}
+._link:hover {	
+	cursor: pointer;
+}
+.top__line {
+	box-shadow: 0 5px 15px #eee;
+}
+.btn-outline-danger {
+    color: #C00000;
+    border-color: #C00000; 
+}
+.btn-outline-danger:hover {
+    color: #fff;
+    background-color: #C00000;
+    border-color: #C00000;
+}
+.nav__admin a:hover,
+.nav__office a:hover {
+	text-decoration: none;
+}
+.box-content {
+	border-radius: 5px;
+	box-shadow: 0 5px 15px #eee;
+}
